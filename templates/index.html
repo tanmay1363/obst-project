@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Intelligent Search Index Optimizer | Frequency-Based OBST</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-mark">OB</div>
+    <div class="brand-copy">
+      <h1>Intelligent Search Index Optimizer</h1>
+      <p>Frequency-Based Optimal Binary Search Tree · Dynamic Programming</p>
+    </div>
+    <div class="topbar-badge"><span class="status-dot"></span> Algorithm Lab</div>
+  </header>
+
+  <main class="app-shell">
+    <section class="panel calculations-panel">
+      <div class="panel-heading">
+        <div><span class="eyebrow">01 / INPUT & COMPUTATION</span><h2>Calculation workspace</h2></div>
+        <span class="panel-icon">ƒx</span>
+      </div>
+
+      <div class="section-block">
+        <div class="section-title-row"><h3>Search key frequencies</h3><span class="muted small">Unique keys · positive counts</span></div>
+        <p class="help-text">Enter a key and how many times it was searched. Keys are sorted automatically.</p>
+        <div id="records-input" class="records-input"></div>
+        <div class="button-row input-actions">
+          <button id="add-row-btn" class="button button-ghost" type="button">＋ Add key</button>
+          <button id="sample-btn" class="button button-ghost" type="button">Load sample</button>
+          <label class="button button-ghost upload-label" for="csv-upload">Upload CSV</label>
+          <input id="csv-upload" type="file" accept=".csv,text/csv" hidden>
+        </div>
+        <button id="build-btn" class="button button-primary full-width" type="button">Initialize <span>→</span></button>
+        <div id="error-message" class="error-message" role="alert" hidden></div>
+      </div>
+
+      <div class="tree-card">
+        <div class="tree-card-header"><div><h3>Constructed binary search tree</h3><p class="muted small">Tree nodes appear only after the DP table is complete.</p></div><span class="legend"><i class="legend-dot root-dot"></i> Selected root</span></div>
+        <div id="tree-canvas" class="tree-canvas"><div class="tree-placeholder"><div class="placeholder-icon">⌘</div><strong>Your tree will appear here</strong><p>Complete the DP table before building the tree.</p></div></div>
+        <div id="tree-caption" class="tree-caption">Waiting for the DP table</div>
+      </div>
+    </section>
+
+    <section class="panel visualization-panel">
+      <div class="panel-heading">
+        <div><span class="eyebrow">02 / DP TABLE & EXECUTION</span><h2>Dynamic programming workspace</h2></div>
+        <button id="reset-btn" class="button button-ghost reset-button" type="button">↻ Reset</button>
+      </div>
+      <div class="metrics-grid">
+        <div class="metric-card"><span class="metric-label">Keys indexed</span><strong id="key-count">—</strong><span class="metric-foot">Sorted unique keys</span></div>
+      </div>
+
+      <div class="section-block results-section">
+        <div class="section-title-row"><h3>Dynamic programming trace</h3><span id="step-counter" class="step-pill">No run yet</span></div>
+        <div class="trace-controls">
+          <button id="prev-step" class="button button-ghost" type="button" disabled>← Previous</button>
+          <button id="next-step" class="button button-secondary" type="button" disabled>Next Step →</button>
+          <button id="complete-table" class="button button-ghost" type="button" disabled>Complete Table</button>
+        </div>
+        <div id="step-detail" class="step-detail empty-state">Initialize a run to prepare the first interval and candidate.</div>
+        <div class="tree-phase-controls">
+          <button id="build-tree" class="button button-primary" type="button" disabled>Build Tree</button>
+          <button id="prev-tree-step" class="button button-ghost" type="button" disabled>← Previous Tree Step</button>
+          <button id="next-tree-step" class="button button-secondary" type="button" disabled>Next Tree Step →</button>
+          <button id="complete-tree" class="button button-ghost" type="button" disabled>Complete Tree</button>
+        </div>
+        <div class="table-block">
+          <div class="table-heading"><h4>Dynamic programming table C(i,j)</h4><span class="muted small">Keys in interval [i,j)</span></div>
+          <div id="cost-table" class="matrix-wrap empty-matrix">The DP table will appear here.</div>
+        </div>
+      </div>
+
+      <div class="search-card">
+        <div class="search-card-title"><div><h3>Test a lookup</h3><p class="muted small">Follow the comparisons through the generated tree.</p></div><span class="search-icon">⌕</span></div>
+        <form id="search-form" class="search-form"><input id="search-target" type="text" placeholder="Enter a key, e.g. 110" autocomplete="off" disabled><button class="button button-primary" type="submit" disabled>Search</button></form>
+        <div id="search-result" class="search-result muted">Finish tree construction to enable search on the optimal tree.</div>
+      </div>
+
+      <div class="complexity-card"><div class="complexity-icon">O(n³)</div><div><h3>Algorithm complexity</h3><p><strong>Time:</strong> O(n³) &nbsp; <strong>Space:</strong> O(n²)</p><p class="muted small">Standard interval DP; the visualization is limited to 15 keys for readability.</p></div></div>
+      <p class="disclaimer">Model scope: successful searches only. This version does not include unsuccessful-search gap frequencies.</p>
+    </section>
+  </main>
+  <footer>Analysis of Algorithms · Optimal Binary Search Tree · Built with Flask and JavaScript</footer>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
